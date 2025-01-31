@@ -105,7 +105,7 @@ class SlnBuildApp:
                     config = json.load(f)
                     self.sln_path = config.get("sln_path", "")
                     self.project_selection = config.get("selected_projects", {})
-                    self.specified_projects = config.get("specified_projects", [])
+
                     if self.sln_path and os.path.exists(self.sln_path):
                         self.file_label.config(text=os.path.basename(self.sln_path), fg="black")
                         self.load_projects()
@@ -154,7 +154,7 @@ class SlnBuildApp:
         sln_directory = os.path.dirname(self.sln_path)
         for root, dirs, files in os.walk(sln_directory):
             for file in files:
-                if file in self.specified_projects:
+                if file in self.project_selection:
                     project_name = os.path.basename(file)
                     project_path = os.path.relpath(os.path.join(root, file), sln_directory)
                     self.projects.append((project_name, project_path))
